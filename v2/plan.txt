@@ -1,0 +1,11 @@
+Separate board and window classes
+Player class as a parent for both human and Minimax
+
+
+Board:
+tracks current game state, checks for wins
+.state represents game state
+empty squares represented by 0 
+1 and -1 use to represent player squares
+
+Window creates window and updates, checks for button?
