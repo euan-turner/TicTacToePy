@@ -9,3 +9,9 @@ empty squares represented by 0
 1 and -1 use to represent player squares
 
 Window creates window and updates, checks for button?
+
+Methods to generate noughts and crosses are seperate from display class,
+a surface with the shape is passed to draw_piece(), which the display objects
+calls.
+
+Squares are 100x100 pxs, tokens surfaces are 70x70 pxs

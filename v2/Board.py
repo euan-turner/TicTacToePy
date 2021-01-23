@@ -2,11 +2,11 @@ import numpy as np
 
 class Board():
 
-    def __init__(self, test):
-        ##self.state = np.zeros((3,3),dtype=int)
-        self.state = test
+    def __init__(self):
+        self.state = np.zeros((3,3),dtype=int)
+        
     
-    def check_win(self):
+    def check_win(self) -> int:
         ##Check columns
         col_sum = np.sum(self.state, axis=0)
         ##Check rows
@@ -25,21 +25,26 @@ class Board():
             return -1
         else:
             return 0
+        
+    def reset(self):
+        self.state = np.zeros((3,3),dtype=int)
+        
 
 
-drawtest = np.array([[1,0,-1],[0,1,1],[0,-1,-1]])
-coltest = np.array([[1,-1,0],[1,0,-1],[1,0,0]])
-rowtest = np.array([[0,0,1],[0,1,1],[-1,-1,-1]])
-backtest = np.array([[0,0,1],[0,1,-1],[1,-1,0]])
-fortest = np.array([[-1,1,1],[0,-1,1],[0,0,-1]])
+def testing():
+    drawtest = np.array([[1,0,-1],[0,1,1],[0,-1,-1]])
+    coltest = np.array([[1,-1,0],[1,0,-1],[1,0,0]])
+    rowtest = np.array([[0,0,1],[0,1,1],[-1,-1,-1]])
+    backtest = np.array([[0,0,1],[0,1,-1],[1,-1,0]])
+    fortest = np.array([[-1,1,1],[0,-1,1],[0,0,-1]])
 
-b = Board(drawtest)
-print(b.check_win())
-b.state = coltest.copy()
-print(b.check_win())
-b.state = rowtest.copy()
-print(b.check_win())
-b.state = backtest.copy()
-print(b.check_win())
-b.state = fortest.copy()
-print(b.check_win())
+    b = Board(drawtest)
+    print(b.check_win())
+    b.state = coltest.copy()
+    print(b.check_win())
+    b.state = rowtest.copy()
+    print(b.check_win())
+    b.state = backtest.copy()
+    print(b.check_win())
+    b.state = fortest.copy()
+    print(b.check_win())
