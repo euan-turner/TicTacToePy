@@ -1,15 +1,19 @@
 import pygame
-
+ 
 class Game():
 
-    def __init__(self,display : Display):
+    ##Passing players to the constructor is temporary for testing
+    def __init__(self,display,players):
         self.display = display
-        self.players = self.get_players()
+        self.players = players
+        ##self.players = self.get_players()
     
     ##Functionality to create player instances
     ##Add case for player vs Minimax later
     def get_players(self):
         pass
+
+    ##def init_display() ? May initialise display instance inside game class
 
     ##Functionality to create and draw buttons
     ##Need a way to monitor
@@ -25,7 +29,7 @@ class Game():
             ##Use player.val to determine side
             quarter = (self.display.window.get_width()//2) + (player.val*(self.display.window.get_width()//4))
             left = quarter - (name_surf.get_width()//2)
-            name_rect = pygame.rect(left,top,name_surf.get_width(),name_surf.get_height())
+            name_rect = pygame.Rect(left,top,name_surf.get_width(),name_surf.get_height())
 
             player.name_surf = name_surf
             player.name_rect = name_rect
@@ -33,7 +37,7 @@ class Game():
     ##Temporary functionality for testing
     def display_scores(self):
         for player in self.players:
-            self.display.windpw.blit(player.name_surf,player.name_rect)
+            self.display.window.blit(player.name_surf,player.name_rect)
 
 
     def update_scores(self):

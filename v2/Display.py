@@ -1,6 +1,6 @@
 import pygame, sys
 pygame.init()
-
+ 
 class Display():
 
     ##May need to have self.buttons
@@ -34,49 +34,9 @@ class Display():
         x,y = pos[0]-token.get_width()//2, pos[1]-token.get_height()//2
         self.window.blit(token, (x,y))
         pygame.display.flip()
-    
-    
-'''
-    ##Create a name_surface for players, with a name_rect describing its position
-    def create_name_surfs(self, players : list):
-        for player in players:
-            font = pygame.font.SysFont('rockwell',40)
-            name_surf = font.render(player.name,False,player.text_colour)
 
-            top = (3/8)*self.window.get_height()
-            ##Use player.val to determine side
-            quarter = (self.window.get_width()//2) + (player.val*(self.window.get_width()//4))
-            left = quarter - (name_surf.get_width()//2)
-            name_rect = pygame.Rect(left,top,name_surf.get_width(),name_surf.get_height())
-            
-            player.name_surf = name_surf
-            player.name_rect = name_rect
-    
-    ##Display player scores at the end of every round
-    ##Temporary functionality for testing
-    def display_scores(self,players):
-        for player in players:
-            self.window.blit(player.name_surf,player.name_rect)
-        
-'''
 
-def test():
-    black = (0,0,0)
-    gold = (255,215,0)
-    orchid = (213,92,208)
-    disp = Display(gold,black)
 
-    temp = 0
-    while True:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                sys.exit()
-        temp += 1
-        if temp == 50:
-            piece = pygame.Surface((70,70))
-            piece.fill(orchid)
-            disp.draw_piece((200,200),piece)
-        pygame.display.flip()
 
     
     

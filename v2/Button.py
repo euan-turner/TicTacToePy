@@ -1,7 +1,7 @@
 import pygame
 
 class Button():
-
+ 
     def __init__(self,rect,colour,hoveredColour,revertColour):
         self.rect = pygame.Rect(rect)
         self.colour = colour

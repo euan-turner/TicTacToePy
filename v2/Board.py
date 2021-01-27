@@ -4,7 +4,7 @@ class Board():
 
     def __init__(self):
         self.state = np.zeros((3,3),dtype=int)
-        
+         
     
     def check_win(self) -> int:
         ##Check columns
@@ -23,6 +23,7 @@ class Board():
             return 1
         elif -3 in col_sum or -3 in row_sum or for_sum == -3 or back_sum == -3:
             return -1
+        ##Game is either drawn, or no win
         else:
             return 0
         
