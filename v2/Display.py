@@ -35,10 +35,8 @@ class Display():
         self.window.blit(token, (x,y))
         pygame.display.flip()
     
-    ##Uses player instances
-    def update_score(self):
-        pass
-
+    
+'''
     ##Create a name_surface for players, with a name_rect describing its position
     def create_name_surfs(self, players : list):
         for player in players:
@@ -60,7 +58,7 @@ class Display():
         for player in players:
             self.window.blit(player.name_surf,player.name_rect)
         
-
+'''
 
 def test():
     black = (0,0,0)
