@@ -1,5 +1,10 @@
 import pygame
- 
+from Board import Board
+from Players import Players
+from Display import Display
+from Button import Button
+
+
 class Game():
 
     ##Passing players to the constructor is temporary for testing
@@ -7,6 +12,7 @@ class Game():
         self.display = display
         self.players = players
         ##self.players = self.get_players()
+        self.board = Board()
     
     ##Functionality to create player instances
     ##Add case for player vs Minimax later
@@ -41,10 +47,15 @@ class Game():
 
 
     def update_scores(self):
-        pass
+        for player in self.players:
+            if player.is_winner:
+                player.inc_score()
+            player.is_winner = False
 
     ##Game loop
     def main(self):
+        
+        ##Variable set-up
 
         cont = True
         while cont:
@@ -53,4 +64,6 @@ class Game():
                     cont = False
                     continue
         
-        pass
+                
+            ##winner = self.board.check_win()
+            ##if winner: inc_score on winner
