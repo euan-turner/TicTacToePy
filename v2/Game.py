@@ -11,6 +11,11 @@ class Game():
     def get_players(self):
         pass
 
+    ##Functionality to create and draw buttons
+    ##Need a way to monitor
+    def set_buttons(self):
+        pass
+
     def create_name_surfs(self):
         for player in self.players:
             font = pygame.font.SysFont('rockwell',40)
@@ -32,4 +37,16 @@ class Game():
 
 
     def update_scores(self):
+        pass
+
+    ##Game loop
+    def main(self):
+
+        cont = True
+        while cont:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    cont = False
+                    continue
+        
         pass
