@@ -1,10 +1,11 @@
-import numpy as np
+import numpy as np, time
 
 class Board():
 
     def __init__(self):
         self.state = np.zeros((3,3),dtype=int)
         self.turns = 0
+        self.scores = [0,0]
 
     def check_win(self) -> int:
         ##Check columns
@@ -29,6 +30,7 @@ class Board():
                 return 0
     
     def reset(self):
+        time.sleep(1)
         self.__init__()
 
     def output(self):
@@ -59,10 +61,13 @@ class Board():
         if status == 1:
             self.output()
             print("Player 1 wins")
+            self.scores[0] += 1
+            print("Score: ", self.scores)
             self.reset()
         elif status == -1:
             self.output()
             print("Player 2 wins")
+            self.scores[1] += 1
             self.reset()
         
     
