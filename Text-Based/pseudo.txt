@@ -1,0 +1,43 @@
+Pseudocode for Minimax algorithm
+
+function findBestMove(board):
+    best_move = none
+    for each valid_move in board:
+        if eval(current valid_move) > eval(best_move) then
+            best_move = current valid_move
+
+eval is found using Minimax
+
+function minimax(board, depth, is_max_player):
+
+    if board state is terminal then    -> state is a leaf node, or win condition occurs
+        return value of board   -> scores associated with winning, drawing or losing
+    
+    if is_max_player then
+        best_val = -inf
+        for each valid_move in board:
+            value = minimax(board, depth+1, false)
+            best_val = maximum(best_val, value)
+        
+        if best_val > 0:   -> Ensure quickest win
+            return best_val - depth
+        else if best_val < 0:   -> Ensure slowest loss
+            return best_val + depth
+        else:
+            return best_val
+
+    else then
+        best_val = +inf
+        for each valid_move in board
+            value = minimax(board,depth+1, true)
+            best_val = minimum(best_val, value)
+        return best_val
+    
+check if board state is terminal
+function isGameOver(board):
+    if check_win(board) == true then
+        return true
+    else if board is full then
+        return true
+    else:
+        return false

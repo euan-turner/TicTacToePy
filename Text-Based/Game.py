@@ -23,11 +23,7 @@ class Board():
             return -1
         ##Game is either drawn, or no win
         else:
-            if 0 not in self.state:
-                print("Game is drawn")
-                self.reset()
-            else:
-                return 0
+            return 0
     
     def reset(self):
         time.sleep(1)
@@ -49,14 +45,18 @@ class Board():
 
     def turn(self):
         ##Use to differentiate between AI and player
+        ##Start with AI only playing second
         if self.turns % 2 == 0:
-            token = 1
-        else:
             token = -1
+            choice = int(input("Enter square (1-9): "))-1
+            self.state[choice//3][choice%3] = token
+            self.turns+=1
+        else:
+            token = 1
+            ai_move = self.find_best_move(token)
+            self.state[ai_move[0]][ai_move[1]] = token
+            self.turns += 1
 
-        choice = int(input("Enter square (1-9): "))-1
-        self.state[choice//3][choice%3] = token
-        self.turns+=1
         status = self.check_win()
         if status == 1:
             self.output()
@@ -69,10 +69,75 @@ class Board():
             print("Player 2 wins")
             self.scores[1] += 1
             self.reset()
-        
-    
+        elif status == 0 and 0 not in self.state:
+            self.output()
+            print("Game is drawn")
+            self.reset()
 
+    def find_best_move(self, ai_token : int) -> (int,int):
+        best_move = None
+        best_eval = -1000
+        
+        ##Search valid moves
+        for row in range(3):
+            for col in range(3):
+                
+                if self.state[row][col] == 0:
+                    self.state[row][col] = ai_token
+
+                    curr_depth = len(np.where(self.state!=0)[0])
+                    move_eval = self.minimax(curr_depth, False, ai_token)
+                    self.state[row][col] = 0
+
+                    if move_eval > best_eval:
+                        best_move = (row,col)
+                        best_eval = move_eval
+        
+        return best_move
     
+    def minimax(self,depth : int, is_max : bool, ai_token : int):
+        score = self.check_win()
+        ##AI win
+        if score == 1:
+            return 10
+        ##Opponent win
+        elif score == -1:
+            return -10
+        ##Draw
+        elif len(np.where(self.state==0)[0]) == 0:
+            return 0
+
+        ##Maximising player -> AI
+        if is_max:
+            best_eval = -1000
+
+            ##Search valid moves
+            for row in range(3):
+                for col in range(3):
+                    if self.state[row][col] == 0:
+                        self.state[row][col] = ai_token
+                        move_eval = self.minimax(depth+1, not is_max, ai_token)
+                        self.state[row][col] = 0
+                        best_eval = max(best_eval,move_eval)
+            
+            ##Work on incorporating depth for efficient wins and prolonged losses
+            return best_eval
+        
+        ##Minimising player -> Human
+        elif not is_max:
+            best_eval = 1000
+
+            ##Search valid moves
+            for row in range(3):
+                for col in range(3):
+                    if self.state[row][col] == 0:
+                        self.state[row][col] = - ai_token
+                        move_eval = self.minimax(depth+1, not is_max, ai_token)
+                        self.state[row][col] = 0
+                        best_eval = min(best_eval, move_eval)
+            
+            ##Work on incorporating depth for efficient wins and prolonged losses
+            return best_eval
 
 board = Board()
 
