@@ -88,7 +88,8 @@ class Board():
                     self.state[row][col] = ai_token
 
                     curr_depth = len(np.where(self.state!=0)[0])
-                    move_eval = self.minimax(curr_depth, False, ai_token)
+                    ##Inital alpha = -1000, beta = 1000
+                    move_eval = self.minimax(curr_depth, False, ai_token, -1000, 1000)
                     self.state[row][col] = 0
 
                     if move_eval > best_eval:
@@ -97,7 +98,7 @@ class Board():
         
         return best_move
     
-    def minimax(self,depth : int, is_max : bool, ai_token : int):
+    def minimax(self,depth : int, is_max : bool, ai_token : int, alpha : int, beta : int):
         score = self.check_win()
         ##AI win
         if score == 1:
@@ -118,9 +119,13 @@ class Board():
                 for col in range(3):
                     if self.state[row][col] == 0:
                         self.state[row][col] = ai_token
-                        move_eval = self.minimax(depth+1, not is_max, ai_token)
+                        move_eval = self.minimax(depth+1, not is_max, ai_token, alpha, beta)
                         self.state[row][col] = 0
                         best_eval = max(best_eval,move_eval)
+                        alpha = max(alpha, best_eval)
+
+                        if beta <= alpha:
+                            break
             
             ##Work on incorporating depth for efficient wins and prolonged losses
             return best_eval
@@ -134,9 +139,13 @@ class Board():
                 for col in range(3):
                     if self.state[row][col] == 0:
                         self.state[row][col] = - ai_token
-                        move_eval = self.minimax(depth+1, not is_max, ai_token)
+                        move_eval = self.minimax(depth+1, not is_max, ai_token, alpha, beta)
                         self.state[row][col] = 0
                         best_eval = min(best_eval, move_eval)
+                        beta = min(beta, best_eval)
+
+                        if beta <= alpha:
+                            break
             
             ##Work on incorporating depth for efficient wins and prolonged losses
             return best_eval
