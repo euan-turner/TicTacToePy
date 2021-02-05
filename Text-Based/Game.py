@@ -6,6 +6,7 @@ class Board():
         self.state = np.zeros((3,3),dtype=int)
         self.turns = 0
         self.scores = [0,0]
+        self.mode = int(input("You first? (1,-1): "))
 
     def check_win(self) -> int:
         ##Check columns
@@ -24,7 +25,7 @@ class Board():
         ##Game is either drawn, or no win
         else:
             return 0
-    
+
     def reset(self):
         time.sleep(1)
         self.__init__()
@@ -44,13 +45,14 @@ class Board():
             print("\n--------")
 
     def turn(self):
-        ##Use to differentiate between AI and player
-        ##Start with AI only playing second
-        if self.turns % 2 == 0:
+        ##Even turn and player plays first -> player turn
+        ##Odd turn and player plays second -> player turn
+        if (self.turns % 2 == 0 and self.mode == 1) or (self.turns % 2 != 0 and self.mode == -1) :
             token = -1
             choice = int(input("Enter square (1-9): "))-1
             self.state[choice//3][choice%3] = token
             self.turns+=1
+        ##Both other cases coverd by Ai turn
         else:
             token = 1
             ai_move = self.find_best_move(token)
