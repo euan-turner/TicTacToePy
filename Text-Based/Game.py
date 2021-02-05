@@ -6,7 +6,7 @@ class Board():
         self.state = np.zeros((3,3),dtype=int)
         self.turns = 0
         self.scores = [0,0]
-        self.mode = int(input("You first? (1,-1): "))
+        self.mode = int(input("Mode? (1,-1): "))
 
     def check_win(self) -> int:
         ##Check columns
@@ -47,9 +47,11 @@ class Board():
     def turn(self):
         ##Even turn and player plays first -> player turn
         ##Odd turn and player plays second -> player turn
-        if (self.turns % 2 == 0 and self.mode == 1) or (self.turns % 2 != 0 and self.mode == -1) :
+        if (self.turns % 2 == 0 and self.mode == 1) or (self.turns % 2 != 0 and self.mode == -1):
             token = -1
-            choice = int(input("Enter square (1-9): "))-1
+            choice = -1
+            while choice < 1 or choice > 9 or self.state[choice//3][choice%3] != 0:
+                choice = int(input("Enter square (1-9): "))-1
             self.state[choice//3][choice%3] = token
             self.turns+=1
         ##Both other cases coverd by Ai turn
