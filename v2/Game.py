@@ -10,7 +10,7 @@ black = (0,0,0) ##For board lines
 gold = (255,215,0) ##For board background
 orchid = (213,92,208) ## For turn pieces and buttons
 dark_orchid = (201,52,196) ## For hovered buttons
-
+ 
 
 class Game():
 
@@ -19,6 +19,7 @@ class Game():
         self.display = Display(gold,black)
         self.players = self.get_players()
         self.board = Board()
+        self.buttons = self.set_buttons()
     
     ##Functionality to create player instances
     ##Add case for player vs Minimax later
@@ -32,13 +33,22 @@ class Game():
         self.create_name_surfs(players)
         return itertools.cycle(players)
 
-
-    ##def init_display() ? May initialise display instance inside game class
-
     ##Functionality to create and draw buttons
     ##Need a way to monitor
     def set_buttons(self):
-        pass
+        buttons = []
+        ##Buttons centred at (100,100),(200,100),(100,200) etc
+        ##Buttons are 20x20 pxs
+        ##Buttons are orchid, turn dard_orchid when hovered, revert to gold once clicked
+        dims = (20,20)
+        for x in range(100,400,100):
+            for y in range(100,400,100):
+                left_top= (x-10,y-10)
+                button_rect = pygame.Rect(left_top, dims)
+                button = Button(button_rect, orchid, dark_orchid, gold)
+                button.update(self.display.window)
+                buttons.append(button)
+        return buttons
 
     def create_name_surfs(self,players):
         for player in players:
@@ -72,13 +82,19 @@ class Game():
     def main(self):
         
         ##Variable set-up
+        current_player = next(self.players)
+        print(current_player)
+        current_player = next(self.players)
+        print(current_player)
 
-        ##Testing
+        ##Testing -> works
+        '''
         self.display_scores()
         player = next(self.players)
         self.display.draw_piece((150,200),player.token)
         player = next(self.players)
         self.display.draw_piece((250,200),player.token)
+        '''
 
         cont = True
         while cont:
@@ -86,6 +102,11 @@ class Game():
                 if event.type == pygame.QUIT:
                     cont = False
                     continue
+            
+                for button in self.buttons:
+                    button.check_hover()
+                    choice_pos = button.check_click(event, self.display.window)
+                    button.update(self.display.window)
             pygame.display.flip()
         
                 
