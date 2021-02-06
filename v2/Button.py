@@ -14,11 +14,14 @@ class Button():
     ##Returns centre of button, used to place token
     def check_click(self,event : pygame.event ,window):
         
-        if event.type == pygame.MOUSEBUTTONDOWN and self.rect.collidepoint(event.pos):
-            ##print(event.pos)
+        if (event.type == pygame.MOUSEBUTTONDOWN and 
+            self.rect.collidepoint(event.pos) and 
+            not self.clicked):
             self.clicked = True
             self.update(window)
             return self.rect.center
+        else:
+            return None
     
     ##Check if mouse is hovering on button
     def check_hover(self):
