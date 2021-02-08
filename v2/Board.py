@@ -28,6 +28,12 @@ class Board():
         ##Game is either drawn, or no win
         else:
             return 0
+    
+    def is_drawn(self) -> bool:
+        if 0 not in self.state:
+            return True
+        else:
+            return False
         
     def reset(self):
         self.state = np.zeros((3,3),dtype=int)

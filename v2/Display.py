@@ -18,6 +18,7 @@ class Display():
     
     def reset_window(self):
         self.window.fill(self.back_colour)
+        self.window.draw_board()
 
     def draw_board(self):
         ##Vertical lines 
