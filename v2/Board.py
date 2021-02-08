@@ -4,7 +4,9 @@ class Board():
 
     def __init__(self):
         self.state = np.zeros((3,3),dtype=int)
-         
+        
+    def play(self, row : int, col : int, val : int):
+        self.state[row][col] = val
     
     def check_win(self) -> int:
         ##Check columns
