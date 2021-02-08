@@ -102,11 +102,28 @@ class Game():
                 if event.type == pygame.QUIT:
                     cont = False
                     continue
-            
+                
                 for button in self.buttons:
-                    button.check_hover()
-                    choice_pos = button.check_click(event, self.display.window)
                     button.update(self.display.window)
+                    
+                    if event.type == pygame.MOUSEBUTTONDOWN:
+                        choice_pos = button.check_click(event, self.display.window)
+                        ##Valid selection made
+                        if choice_pos != None:
+                            button.update(self.display.window)
+                            self.buttons.remove(button)
+                            row = int((choice_pos[0]/100) -1)
+                            col = int((choice_pos[1]/100) -1)
+                            
+                            self.board.play(row,col,current_player.val)
+                            self.display.draw_piece(choice_pos, current_player.token)
+
+                            self.board.check_win()
+                            ##Display winner, check for draw, reset if game over
+                            current_player = next(self.players)
+                        
+                    
+                    
             pygame.display.flip()
         
                 
