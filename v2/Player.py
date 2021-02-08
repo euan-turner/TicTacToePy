@@ -12,7 +12,7 @@ class Player:
     val : int
     text_colour : (int,int,int)
     score : int = 0
-    is_winner : bool = False
+    ##is_winner : bool = False
 
     ##Increment the score after a win
     def inc_score(self):

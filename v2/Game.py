@@ -1,4 +1,4 @@
-import pygame, random, itertools
+import pygame, random, itertools, time
 from Board import Board
 from Player import Player
 from Display import Display
@@ -20,6 +20,12 @@ class Game():
         self.players = self.get_players()
         self.board = Board()
         self.buttons = self.set_buttons()
+    
+    def reset(self):
+        self.display.reset_window()
+        self.board.reset()
+        self.buttons = self.set_buttons()
+
     
     ##Functionality to create player instances
     ##Add case for player vs Minimax later
@@ -72,11 +78,11 @@ class Game():
         self.display.window.blit(player.name_surf,player.name_rect)
 
 
-    def update_scores(self):
-        for player in self.players:
-            if player.is_winner:
-                player.inc_score()
-            player.is_winner = False
+    ##def update_scores(self):
+        ##for player in self.players:
+            ##if player.is_winner:
+                ##player.inc_score()
+            ##player.is_winner = False
 
     ##Game loop
     def main(self):
@@ -118,7 +124,16 @@ class Game():
                             self.board.play(row,col,current_player.val)
                             self.display.draw_piece(choice_pos, current_player.token)
 
-                            self.board.check_win()
+                            if current_player.val == self.board.check_win():
+                                current_player.inc_score()
+                                self.display_scores()
+                                time.sleep(2)
+                                self.reset()
+                            elif self.board.is_drawn():
+                                self.display_scores()
+                                time.sleep(2)
+                                self.reset()
+                                
                             ##Display winner, check for draw, reset if game over
                             current_player = next(self.players)
                         
