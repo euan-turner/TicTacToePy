@@ -50,7 +50,7 @@ class Board():
         if (self.turns % 2 == 0 and self.mode == 1) or (self.turns % 2 != 0 and self.mode == -1):
             token = -1
             choice = -1
-            while choice < 1 or choice > 9 or self.state[choice//3][choice%3] != 0:
+            while choice not in range(0,9) or self.state[choice//3][choice%3] != 0:
                 choice = int(input("Enter square (1-9): "))-1
             self.state[choice//3][choice%3] = token
             self.turns+=1
@@ -99,7 +99,7 @@ class Board():
                         best_eval = move_eval
         
         return best_move
-    
+     
     def minimax(self,depth : int, is_max : bool, ai_token : int, alpha : int, beta : int):
         score = self.check_win()
         ##AI win
