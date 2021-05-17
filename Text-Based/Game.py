@@ -1,13 +1,17 @@
 import numpy as np, time
 from prettytable import PrettyTable
 
+PLAYER_FIRST = 1
+AI_FIRST = -1
+
 class Board():
 
     def __init__(self):
         self.state = np.zeros((3,3),dtype=int)
         self.turns = 0
         self.scores = [0,0]
-        self.mode = int(input("Mode? (1,-1): "))
+        mode = input(f"Mode?\n{PLAYER_FIRST}. Player first\n{AI_FIRST}. AI first\n\t: ")
+        self.mode = int(mode)
 
     def check_win(self) -> int:
         ##Check columns
@@ -50,13 +54,16 @@ class Board():
     def turn(self):
         ##Even turn and player plays first -> player turn
         ##Odd turn and player plays second -> player turn
-        if (self.turns % 2 == 0 and self.mode == 1) or (self.turns % 2 != 0 and self.mode == -1):
+        if (self.turns % 2 == 0 and self.mode == PLAYER_FIRST) or (self.turns % 2 != 0 and self.mode == AI_FIRST):
             token = -1
             choice = -1
+
+            ##Move validation
             while choice not in range(0,9) or self.state[choice//3][choice%3] != 0:
                 choice = int(input("Enter square (1-9): "))-1
             self.state[choice//3][choice%3] = token
             self.turns+=1
+        
         ##Both other cases coverd by Ai turn
         else:
             token = 1
@@ -65,17 +72,20 @@ class Board():
             self.turns += 1
 
         status = self.check_win()
+
         if status == 1:
             self.output()
             print("Player 1 wins")
             self.scores[0] += 1
             print("Score: ", self.scores)
             self.reset()
+
         elif status == -1:
             self.output()
             print("Player 2 wins")
             self.scores[1] += 1
             self.reset()
+
         elif status == 0 and 0 not in self.state:
             self.output()
             print("Game is drawn")
