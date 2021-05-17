@@ -16,9 +16,10 @@ class Display():
         pygame.display.set_caption("Tic Tac Toe")
         self.window.fill(self.back_colour)
     
+    ##Wipe board after game
     def reset_window(self):
         self.window.fill(self.back_colour)
-        self.window.draw_board()
+        self.draw_board()
 
     def draw_board(self):
         ##Vertical lines 
