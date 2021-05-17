@@ -1,4 +1,5 @@
 import numpy as np, time
+from prettytable import PrettyTable
 
 class Board():
 
@@ -31,18 +32,20 @@ class Board():
         self.__init__()
 
     def output(self):
-        print("--------")
+        table = PrettyTable()
+        table.header = False
+        table.hrules = True
         for row in self.state:
-            print(end = "|")
+            r = []
             for col in row:
                 if col == 1:
-                    char = 'x'
+                    r.append('x')
                 elif col == -1:
-                    char = 'o'
+                    r.append('o')
                 else:
-                    char = ' '
-                print(char, end = "|")
-            print("\n--------")
+                    r.append(' ')
+            table.add_row(r)
+        print(table)
 
     def turn(self):
         ##Even turn and player plays first -> player turn
