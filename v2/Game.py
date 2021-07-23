@@ -4,7 +4,7 @@ from Player import Player
 from Display import Display
 from Button import Button
 from Pieces import draw_nought, draw_cross
-
+ 
 ##Colours
 black = (0,0,0) ##For board lines
 gold = (255,215,0) ##For board background
